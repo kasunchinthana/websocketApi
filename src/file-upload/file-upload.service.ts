@@ -8,25 +8,14 @@ import { getConnection } from 'typeorm';
 export class FileUploadService {
     private readonly logger = new Logger(FileUploadService.name);
   
- // var csv = require('fast-csv');
   @Process('upload')
   async handleTranscode(job: Job) {
-    this.logger.debug(job.data);
-     // can be used once createConnection is called and is resolved
-     const connection = getConnection();
-//await connection.connect();
-    this.logger.debug(job.data);
-    //let csvToJson = require('convert-csv-to-json');
-    this.logger.debug('Start transcoding...');
-    //const pool = require('./pgdb');
-    //this.logger.debug(getConnection().);
     
-    //await connection.connect();
-    //this.logger.debug(connection.connect());
+    const connection = getConnection();
     this.logger.debug(job.data);
-    this.logger.debug(job.data);
-   // let json = csvToJson.getJsonFromCsv(job.data.file);
-   // this.logger.debug(json.last_name);
+    this.logger.debug('Start transcoding...');
+   
+   
     const csv = require('csv-parser');
     const fs = require('fs');
 
@@ -43,11 +32,11 @@ export class FileUploadService {
     let curDateInMilySec = Date.parse(datetime);
     let age_of_vehicle = (curDateInMilySec - manufactreDateInMilySec)/(365*3600*24*1000) ;
     
-    connection.query("SELECT * FROM vehicle where first_name='Abdul'" );
+   // connection.query("SELECT * FROM vehicle where first_name='Abdul'" );
 
-  //   connection.query("INSERT INTO vehicle(first_name, last_name, email, car_make, car_model, vin_number, manufactured_date,age_of_vehicle) \
-  // VALUES($1, $2, $3, $4, $5, $6, $7, $8)", [first_name, last_name, email, car_make, car_model, vin_number, manufactured_date,age_of_vehicle],
-  //     );
+     connection.query("INSERT INTO vehicle(first_name, last_name, email, car_make, car_model, vin_number, manufactured_date,age_of_vehicle) \
+   VALUES($1, $2, $3, $4, $5, $6, $7, $8)", [first_name, last_name, email, car_make, car_model, vin_number, manufactured_date,age_of_vehicle],
+      );
       console.log(row);
       
     }).on('end', () => {console.log('CSV file successfully processed');
